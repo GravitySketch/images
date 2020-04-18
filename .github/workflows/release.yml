@@ -1,0 +1,24 @@
+name: release
+
+on:
+  push:
+    branches: 
+      - master
+
+jobs:
+  release-baseci:
+    name: Release baseci
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: "build baseci image"
+      run: |
+        echo "building images"
+    
+    - name: "release baseci image"
+      run: |
+        echo "releasing image"
