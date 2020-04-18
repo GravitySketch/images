@@ -1,4 +1,4 @@
-FROM mono:6.8.0
+FROM ubuntu:18.04
 
 RUN apt-get update
 RUN apt-get upgrade -y
@@ -39,6 +39,15 @@ RUN wget https://github.com/protocolbuffers/protobuf/releases/download/v$PROTOC_
     cp -r protoc3/bin/* /usr/local/bin/ && \
     cp -r protoc3/include/* /usr/local/include/ && \
     ldconfig
+
+# install mono
+RUN mkdir $HOME/.gnupg && \
+    echo "disable-ipv6" >> $HOME/.gnupg/dirmngr.conf && \
+    apt-get install -y --no-install-recommends gnupg ca-certificates && \
+    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF && \
+    echo "deb https://download.mono-project.com/repo/ubuntu stable-bionic main" | tee /etc/apt/sources.list.d/mono-official-stable.list && \
+    apt-get update && \
+    apt-get -y --no-install-recommends install mono-complete
 
 # install pip3
 RUN apt-get install -y --no-install-recommends python3-pip

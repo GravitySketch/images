@@ -15,10 +15,24 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: "build baseci image"
+    - name: Login to docker hub
+      run: docker login --username gravitysketch --password ${{ secrets.HUB_TOKEN }}
+
+    - name: Build baseci image
       run: |
-        echo "building images"
+        docker pull gravitysketch/baseci:latest || true
+        docker build \
+          --pull \
+          --cache-from gravitysketch/baseci:latest \
+          -t gravitysketch/baseci:latest \
+          -f ./baseci/Dockerfile \
+          ./baseci
     
-    - name: "release baseci image"
+    - name: Release baseci image
       run: |
-        echo "releasing image"
+        docker push \
+          gravitysketch/baseci:latest
+
+    - name: Logout of docker hub
+      if: always()
+      run: docker logout
