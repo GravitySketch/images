@@ -57,3 +57,9 @@ RUN apt-get install -y --no-install-recommends software-properties-common && \
     add-apt-repository ppa:chris-lea/redis-server && \
     apt-get update && \
     apt-get install -y --no-install-recommends redis-server
+
+
+# install latest git
+RUN add-apt-repository -y ppa:git-core/ppa && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends git
