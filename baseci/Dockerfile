@@ -63,3 +63,11 @@ RUN apt-get install -y --no-install-recommends software-properties-common && \
 RUN add-apt-repository -y ppa:git-core/ppa && \
     apt-get update && \
     apt-get install -y --no-install-recommends git
+
+# install kubectl
+ENV KUBECTL_VERSION 1.18.0
+RUN apt-get install -y --no-install-recommends curl
+RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/v$KUBECTL_VERSION/bin/linux/amd64/kubectl && \
+    chmod +x ./kubectl && \
+    mv ./kubectl /usr/local/bin/kubectl && \
+    kubectl version --client
