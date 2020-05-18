@@ -71,3 +71,9 @@ RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/v$KUBECTL
     chmod +x ./kubectl && \
     mv ./kubectl /usr/local/bin/kubectl && \
     kubectl version --client
+
+# install awscli
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+    unzip awscliv2.zip && \
+    ./aws/install && \
+    aws --version
