@@ -94,6 +94,3 @@ RUN apt-get update
 RUN apt-get install -y --no-install-recommends docker-ce-cli && \
     docker --version
 
-#Setup ci user as embedded pgsql cant run as root
-RUN useradd -ms /bin/bash baseci
-USER baseci
