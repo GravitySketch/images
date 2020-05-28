@@ -99,11 +99,13 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 RUN apt-get update
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y postgresql-10 postgresql-client-10 postgresql-contrib-10
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    postgresql-10 \
+    postgresql-client-10 \
+    postgresql-contrib-10
 USER postgres
 RUN sed -i -e '/port =/ s/= .*/= 54321/' /etc/postgresql/10/main/postgresql.conf
-RUN    /etc/init.d/postgresql start  &&\
+RUN    /etc/init.d/postgresql start  && \
     psql -p 54321 --command "CREATE USER docker WITH SUPERUSER PASSWORD 'docker';"
-ENTRYPOINT /etc/init.d/postgresql start && /bin/bash
-
 USER root 
