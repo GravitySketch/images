@@ -26,6 +26,3 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get install -y \
     postgresql-client-10
-
-# Keep container running
-CMD tail -f /dev/null
