@@ -109,3 +109,10 @@ RUN sed -i -e '/port =/ s/= .*/= 54321/' /etc/postgresql/10/main/postgresql.conf
 RUN    /etc/init.d/postgresql start  && \
     psql -p 54321 --command "CREATE USER docker WITH SUPERUSER PASSWORD 'docker';"
 USER root 
+
+# Install terraform
+ENV TF_VERSION 0.13.2
+RUN wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip && \
+    unzip -o terraform_${TF_VERSION}_linux_amd64.zip -d . && \
+    cp terraform /usr/local/bin/ && \
+    terraform version
