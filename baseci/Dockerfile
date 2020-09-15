@@ -9,7 +9,13 @@ RUN apt-get install -y --no-install-recommends \
         unzip
 
 RUN apt-get install -y --no-install-recommends python3
-RUN apt-get install -y --no-install-recommends openjdk-8-jdk-headless
+
+# install java 11
+RUN apt-get install -y gnupg2
+RUN apt-get install -y --no-install-recommends software-properties-common
+RUN wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add -
+RUN add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
+RUN apt-get install -y --no-install-recommends adoptopenjdk-11-hotspot
 
 # install go
 ENV GO_VERSION=1.13.5
