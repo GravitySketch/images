@@ -29,7 +29,7 @@ RUN wget -q https://dl.google.com/go/go${GO_VERSION}.linux-amd64.tar.gz && \
     mv go /usr/local
 
 # install maven
-ENV MAVEN_VERSION 3.5.4
+ENV MAVEN_VERSION 3.6.3
 ENV MAVEN_HOME /usr/lib/mvn
 ENV PATH $MAVEN_HOME/bin:$PATH
 
