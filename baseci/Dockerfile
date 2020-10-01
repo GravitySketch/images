@@ -7,6 +7,8 @@ RUN apt-get install -y --no-install-recommends \
         redis-server \
         wget \
         unzip
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends zip
 
 RUN apt-get install -y --no-install-recommends python3
 
