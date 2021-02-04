@@ -2,7 +2,7 @@ name: release
 
 on:
   push:
-    branches: 
+    branches:
       - master
 
 jobs:
@@ -13,29 +13,29 @@ jobs:
     timeout-minutes: 60
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Login to docker hub
-      run: docker login --username gravitysketch --password ${{ secrets.HUB_TOKEN }}
+      - name: Login to docker hub
+        run: docker login --username gravitysketch --password ${{ secrets.HUB_TOKEN }}
 
-    - name: Build baseci image
-      run: |
-        docker pull gravitysketch/baseci:latest || true
-        docker build \
-          --pull \
-          --cache-from gravitysketch/baseci:latest \
-          -t gravitysketch/baseci:latest \
-          -f ./baseci/Dockerfile \
-          ./baseci
-    
-    - name: Release baseci image
-      run: |
-        docker push \
-          gravitysketch/baseci:latest
+      - name: Build baseci image
+        run: |
+          docker pull gravitysketch/baseci:latest || true
+          docker build \
+            --pull \
+            --cache-from gravitysketch/baseci:latest \
+            -t gravitysketch/baseci:latest \
+            -f ./baseci/Dockerfile \
+            ./baseci
 
-    - name: Logout of docker hub
-      if: always()
-      run: docker logout
+      - name: Release baseci image
+        run: |
+          docker push \
+            gravitysketch/baseci:latest
+
+      - name: Logout of docker hub
+        if: always()
+        run: docker logout
   release-debugpod:
     name: Release debugpod
 
@@ -62,6 +62,36 @@ jobs:
         run: |
           docker push \
             gravitysketch/debugpod:latest
+
+      - name: Logout of docker hub
+        if: always()
+        run: docker logout
+  release-webci:
+    name: Release webci
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Login to docker hub
+        run: docker login --username gravitysketch --password ${{ secrets.HUB_TOKEN }}
+
+      - name: Build webci image
+        run: |
+          docker pull gravitysketch/webci:latest || true
+          docker build \
+            --pull \
+            --cache-from gravitysketch/webci:latest \
+            -t gravitysketch/webci:latest \
+            -f ./webci/Dockerfile \
+            ./webci
+
+      - name: Release webci image
+        run: |
+          docker push \
+            gravitysketch/webci:latest
 
       - name: Logout of docker hub
         if: always()
