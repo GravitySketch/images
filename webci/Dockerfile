@@ -2,7 +2,8 @@ FROM ubuntu:18.04
 
 # install node and npm using nvm
 ENV NODE_VERSION=14.15.0
-RUN apt install -y curl
+RUN apt-get update
+RUN apt-get -y install curl
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
 ENV NVM_DIR=/root/.nvm
 RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
