@@ -119,7 +119,7 @@ RUN    /etc/init.d/postgresql start  && \
 USER root 
 
 # Install terraform
-ENV TF_VERSION 0.13.4
+ENV TF_VERSION 0.13.5
 RUN wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip && \
     unzip -o terraform_${TF_VERSION}_linux_amd64.zip -d . && \
     cp terraform /usr/local/bin/ && \
