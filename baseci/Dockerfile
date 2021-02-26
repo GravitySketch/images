@@ -20,7 +20,7 @@ RUN add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
 RUN apt-get install -y --no-install-recommends adoptopenjdk-11-hotspot
 
 # install go
-ENV GO_VERSION=1.15.6
+ENV GO_VERSION=1.16
 ENV GOROOT /usr/local/go
 ENV GOPATH $HOME/go
 ENV GO111MODULE=on
