@@ -3,7 +3,6 @@ FROM ubuntu:18.04
 # install node and npm using nvm
 ENV NODE_VERSION=14.15.0
 RUN apt-get update
-RUN apt-get install xvfb
 RUN apt-get -y install curl
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
 ENV NVM_DIR=/root/.nvm
@@ -16,6 +15,3 @@ RUN npm --version
 
 # install yarn
 RUN npm install --global yarn
-
-# install cypress dependencies
-RUN apt-get -y install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
