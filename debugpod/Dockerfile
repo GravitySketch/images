@@ -7,6 +7,7 @@ RUN apt-get install -y --no-install-recommends \
         wget \
         unzip \
         curl \
+	ssh \
         iputils-ping \
         apt-transport-https \
         ca-certificates \
