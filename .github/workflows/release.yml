@@ -96,3 +96,33 @@ jobs:
       - name: Logout of docker hub
         if: always()
         run: docker logout
+  release-onpremci:
+    name: Release onpremci
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Login to docker hub
+        run: docker login --username gravitysketch --password ${{ secrets.HUB_TOKEN }}
+
+      - name: Build onpremci image
+        run: |
+          docker pull gravitysketch/onpremci:latest || true
+          docker build \
+            --pull \
+            --cache-from gravitysketch/onpremci:latest \
+            -t gravitysketch/onpremci:latest \
+            -f ./onpremci/Dockerfile \
+            ./onpremci
+
+      - name: Release onpremci image
+        run: |
+          docker push \
+            gravitysketch/onpremci:latest
+
+      - name: Logout of docker hub
+        if: always()
+        run: docker logout
