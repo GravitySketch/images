@@ -137,4 +137,52 @@ RUN node --version
 RUN npm --version
 
 # install yarn
-RUN npm install --global yarn
+RUN npm install -g yarn@latest --force
+RUN yarn --version
+
+# Install Cypress e2e testing dependecies
+RUN apt-get install --no-install-recommends -y \
+  libgtk2.0-0 \
+  libgtk-3-0 \
+  libnotify-dev \
+  libgconf-2-4 \
+  libgbm-dev \
+  libnss3 \
+  libxss1 \
+  libasound2 \
+  libxtst6 \
+  xauth \
+  xvfb \
+  fonts-arphic-bkai00mp \
+  fonts-arphic-bsmi00lp \
+  fonts-arphic-gbsn00lp \
+  fonts-arphic-gkai00mp \
+  fonts-arphic-ukai \
+  fonts-arphic-uming \
+  ttf-wqy-zenhei \
+  ttf-wqy-microhei \
+  xfonts-wqy \
+  && rm -rf /var/lib/apt/lists/*
+ENV TERM xterm
+ENV npm_config_loglevel warn
+ENV npm_config_unsafe_perm true
+RUN node -p process.versions
+
+# install Chrome browser
+RUN apt-get install -y fonts-liberation libappindicator3-1 xdg-utils
+ENV CHROME_VERSION 86.0.4240.193
+RUN wget -O /usr/src/google-chrome-stable_current_amd64.deb "http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}-1_amd64.deb" && \
+  dpkg -i /usr/src/google-chrome-stable_current_amd64.deb ; \
+  apt-get install -f -y && \
+  rm -f /usr/src/google-chrome-stable_current_amd64.deb
+RUN google-chrome --version
+ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
+RUN apt-get update && apt-get install -y zip
+
+# install Firefox browser
+RUN apt-get install mplayer -y
+ARG FIREFOX_VERSION=82.0.3
+RUN wget --no-verbose -O /tmp/firefox.tar.bz2 https://download-installer.cdn.mozilla.net/pub/firefox/releases/$FIREFOX_VERSION/linux-x86_64/en-US/firefox-$FIREFOX_VERSION.tar.bz2 \
+  && tar -C /opt -xjf /tmp/firefox.tar.bz2 \
+  && rm /tmp/firefox.tar.bz2 \
+  && ln -fs /opt/firefox/firefox /usr/bin/firefox
