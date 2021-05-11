@@ -8,4 +8,5 @@ RUN apt-get install -y gnupg2
 RUN apt-get install -y --no-install-recommends software-properties-common
 RUN wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add -
 RUN add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
+RUN apt update
 RUN apt-get install -y --no-install-recommends adoptopenjdk-11-hotspot
