@@ -141,7 +141,8 @@ RUN npm install -g yarn@latest --force
 RUN yarn --version
 
 # Install Cypress e2e testing dependecies
-RUN apt-get install --no-install-recommends -y \
+RUN apt-get update && \ 
+  apt-get install --no-install-recommends -y \
   libgtk2.0-0 \
   libgtk-3-0 \
   libnotify-dev \
@@ -169,6 +170,7 @@ ENV npm_config_unsafe_perm true
 RUN node -p process.versions
 
 # install Chrome browser
+RUN apt-get update
 RUN apt-get install -y fonts-liberation libappindicator3-1 xdg-utils
 ENV CHROME_VERSION 86.0.4240.193
 RUN wget -O /usr/src/google-chrome-stable_current_amd64.deb "http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}-1_amd64.deb" && \
