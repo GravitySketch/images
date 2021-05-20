@@ -1,9 +1,16 @@
 FROM ubuntu:18.04
 
+# install latest git
+RUN apt-get update
+RUN apt install software-properties-common -y
+RUN add-apt-repository ppa:git-core/ppa -y
+RUN apt update
+RUN apt install git -y
+
 # install node and npm using nvm
 ENV NODE_VERSION=14.15.0
 RUN apt-get update
-RUN apt-get -y install zip unzip curl git
+RUN apt-get -y install zip unzip curl
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
 ENV NVM_DIR=/root/.nvm
 RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
