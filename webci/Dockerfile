@@ -1,11 +1,9 @@
 FROM ubuntu:18.04
 
-# install latest git
+# install make
 RUN apt-get update
-RUN apt install software-properties-common -y
-RUN add-apt-repository ppa:git-core/ppa -y
+RUN apt-get -y install make
 RUN apt update
-RUN apt install git -y
 
 # install node and npm using nvm
 ENV NODE_VERSION=14.15.0
@@ -22,3 +20,6 @@ RUN npm --version
 
 # install yarn
 RUN npm install --global yarn
+
+# install sentry-cli
+RUN curl -sL https://sentry.io/get-cli/ | bash
